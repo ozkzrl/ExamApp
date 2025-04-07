@@ -1,0 +1,33 @@
+@model List<Question>
+
+@{
+    ViewData["Title"] = "Sınav Başla";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Submit" method="post">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="question-box">
+            <p><strong>@(i + 1). @Model[i].Text</strong></p>
+            @if (Model[i].Options != null && Model[i].Options.Count > 0)
+            {
+                @foreach (var option in Model[i].Options)
+                {
+                    <div>
+                        <input type="radio" name="userAnswers[@i]" value="@option.Id" />
+                        <label>@option.Text</label>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No options available for this question.</p>
+            }
+        </div>
+        <hr />
+    }
+
+    <button type="submit">Sınavı Bitir</button>
+</form>

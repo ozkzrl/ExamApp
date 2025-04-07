@@ -1,0 +1,12 @@
+@Model MyMvcExamProject.Models.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Sınav Sonucu";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>Doğru Sayısı: @Model.Score</p>
+<p>Toplam Soru Sayısı: @Model.TotalQuestions</p>
+<!-- Ana sayfaya (Index'e) dönüş bağlantısı -->
+<a asp-action="Index" class="btn btn-primary">Yeniden Başla</a>
