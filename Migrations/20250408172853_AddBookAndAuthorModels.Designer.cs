@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using MyMvcExamProject.Data;
 
 #nullable disable
 
 namespace MyMvcExamProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250407184532_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250408172853_AddBookAndAuthorModels")]
+    partial class AddBookAndAuthorModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

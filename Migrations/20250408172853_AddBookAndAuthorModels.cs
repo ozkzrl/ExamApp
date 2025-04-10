@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using MyMvcExamProject.Data;
+
+
 
 #nullable disable
 
 namespace MyMvcExamProject.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class AddBookAndAuthorModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

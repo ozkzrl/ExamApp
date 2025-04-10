@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fUWqHg3sJCN2VKbzfHPzDEj37sV9Whi/VGUiCtb5rryh4XDE7SerDJyR7JvhkcY7w62WhVaCJ3oU7qNnKTUlAg==",
+  "dgSpecHash": "5smrVrGiGSLgar6wUOvdRar+zGL4jwfNedTHgh2ueedzQ0g6dDEEV8G4NcQ2OJxVVfleIqf+Yya7PGmBV8UMuw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject\\MyMvcExamProject.csproj",
+  "projectFilePath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\MyMvcExamProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\binkunduz\\.nuget\\packages\\entityframework\\6.0.0\\entityframework.6.0.0.nupkg.sha512",
     "C:\\Users\\binkunduz\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
@@ -54,7 +54,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "'EntityFramework 6.0.0' paketi, proje hedef çerçevesi 'net6.0' yerine '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' kullanılarak geri yüklendi. Bu paket projenizle tamamen uyumlu olmayabilir.",
+      "message": "Package 'EntityFramework 6.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
       "libraryId": "EntityFramework",
       "targetGraphs": [
         "net6.0"

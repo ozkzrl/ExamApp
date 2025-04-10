@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyMvcExamProject.Models;
+using MyMvcExamProject.Data; // <-- Bunu mutlaka ekle
 
 namespace ExamApp.Controllers
 {

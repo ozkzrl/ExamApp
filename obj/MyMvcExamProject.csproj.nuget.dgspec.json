@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject\\MyMvcExamProject.csproj": {}
+    "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\MyMvcExamProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject\\MyMvcExamProject.csproj": {
+    "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\MyMvcExamProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject\\MyMvcExamProject.csproj",
+        "projectUniqueName": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\MyMvcExamProject.csproj",
         "projectName": "MyMvcExamProject",
-        "projectPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject\\MyMvcExamProject.csproj",
+        "projectPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\MyMvcExamProject.csproj",
         "packagesPath": "C:\\Users\\binkunduz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject\\obj\\",
+        "outputPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\binkunduz\\AppData\\Roaming\\NuGet\\NuGet.Config"

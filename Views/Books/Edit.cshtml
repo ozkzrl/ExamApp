@@ -1,0 +1,14 @@
+@model MyMvcExamProject.Models.Book
+
+<h2>Kitap Düzenle</h2>
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <label>Başlık:</label>
+    <input asp-for="Title" class="form-control" />
+    <label>Yazar:</label>
+    <input asp-for="Author" class="form-control" />
+    <label>Yıl:</label>
+    <input asp-for="Year" class="form-control" />
+    <button type="submit" class="btn btn-primary mt-2">Güncelle</button>
+</form>
+

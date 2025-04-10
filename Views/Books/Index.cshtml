@@ -1,0 +1,25 @@
+@model List<MyMvcExamProject.Models.Book>
+
+<h2>Kitap Listesi</h2>
+<a href="/Book/Create">Yeni Kitap Ekle</a>
+<table class="table">
+    <tr>
+        <th>Başlık</th>
+        <th>Yazar</th>
+        <th>Yıl</th>
+        <th>İşlemler</th>
+    </tr>
+    @foreach (var book in Model)
+    {
+        <tr>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.Year</td>
+            <td>
+                <a href="/Book/Edit/@book.Id">Düzenle</a> |
+                <a href="/Book/Delete/@book.Id">Sil</a>
+            </td>
+        </tr>
+    }
+    <a asp-controller="Books" asp-action="Create" class="btn btn-success" style="margin-bottom:15px;">Kitap Ekle</a>
+</table>
