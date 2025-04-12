@@ -2062,11 +2062,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\MyMvcExamProject.csproj",
+      "projectUniqueName": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 5\\MyMvcExamProject.csproj",
       "projectName": "MyMvcExamProject",
-      "projectPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\MyMvcExamProject.csproj",
+      "projectPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 5\\MyMvcExamProject.csproj",
       "packagesPath": "C:\\Users\\binkunduz\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\obj\\",
+      "outputPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 5\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\binkunduz\\AppData\\Roaming\\NuGet\\NuGet.Config"

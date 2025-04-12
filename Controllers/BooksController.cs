@@ -57,13 +57,18 @@ namespace MyMvcExamProject.Controllers
             return View(book);
         }
 
+        // GET: Books/Delete/9
         public async Task<IActionResult> Delete(int id)
         {
             var book = await _context.Books.FindAsync(id);
-            if (book == null) return NotFound();
+            if (book == null)
+            {
+                return NotFound();
+            }
             return View(book);
         }
 
+        // POST: Books/DeleteConfirmed/9
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5smrVrGiGSLgar6wUOvdRar+zGL4jwfNedTHgh2ueedzQ0g6dDEEV8G4NcQ2OJxVVfleIqf+Yya7PGmBV8UMuw==",
+  "dgSpecHash": "PV08itC7crbfXVEW1SzNpu1u+bSqtWHrMvtYqqJbR06PRjm98pTTzB1vNEzINiPkh68g2GWiShPia8tLFJF61w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 3\\MyMvcExamProject.csproj",
+  "projectFilePath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 5\\MyMvcExamProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\binkunduz\\.nuget\\packages\\entityframework\\6.0.0\\entityframework.6.0.0.nupkg.sha512",
     "C:\\Users\\binkunduz\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

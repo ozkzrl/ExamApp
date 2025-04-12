@@ -1,7 +1,6 @@
 @model List<MyMvcExamProject.Models.Book>
 
 <h2>Kitap Listesi</h2>
-<a href="/Book/Create">Yeni Kitap Ekle</a>
 <table class="table">
     <tr>
         <th>Başlık</th>
@@ -16,8 +15,11 @@
             <td>@book.Author</td>
             <td>@book.Year</td>
             <td>
-                <a href="/Book/Edit/@book.Id">Düzenle</a> |
-                <a href="/Book/Delete/@book.Id">Sil</a>
+              <a href="/Books/Edit/@book.Id" class="btn btn-primary">Düzenle</a>
+
+                <form method="post" action="@Url.Action("Delete", "Books", new { id = book.Id })" style="display:inline;">
+                    <input type="submit" value="Sil" class="btn btn-danger" />
+                </form>
             </td>
         </tr>
     }

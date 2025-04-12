@@ -1,4 +1,4 @@
-@model List<Question>
+@model MyMvcExamProject.Models.ExamViewModel
 
 @{
     ViewData["Title"] = "Sınav Başla";
@@ -6,31 +6,54 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<!-- Kitap Ekle Linki -->
-<a asp-controller="Books" asp-action="Create" class="btn btn-success" style="margin-bottom:15px;">Kitap Ekle</a>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary()
+    </div>
+}
 
 <form asp-action="Submit" method="post">
-    @for (int i = 0; i < Model.Count; i++)
+    @for (int i = 0; i < Model.Questions.Count; i++)
     {
+        var question = Model.Questions[i];
         <div class="question-box">
-            <p><strong>@(i + 1). @Model[i].Text</strong></p>
-            @if (Model[i].Options != null && Model[i].Options.Count > 0)
+            <p><strong>@(i + 1). @question.Text</strong></p>
+
+            @foreach (var option in question.Options)
             {
-                @foreach (var option in Model[i].Options)
-                {
-                    <div>
-                        <input type="radio" name="userAnswers[@i]" value="@option.Id" />
-                        <label>@option.Text</label>
-                    </div>
-                }
-            }
-            else
-            {
-                <p>No options available for this question.</p>
+                <div>
+                    <input type="radio"
+                           name="UserAnswers[@i]"
+                           value="@option.Id"
+                           @(Model.UserAnswers != null && Model.UserAnswers.Count > i && Model.UserAnswers[i] == option.Id ? "checked" : "") />
+                    <label>@option.Text</label>
+                </div>
             }
         </div>
         <hr />
     }
 
     <button type="submit" class="btn btn-primary">Sınavı Bitir</button>
+ <a asp-controller="Books" asp-action="Create" class="btn btn-success" style="margin-bottom:15px;">Kitap Ekle</a>
+    
 </form>
+<script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const totalQuestions = @Model.Questions.Count;
+        let allAnswered = true;
+
+        for (let i = 0; i < totalQuestions; i++) {
+            const selected = document.querySelector(`input[name="UserAnswers[${i}]"]:checked`);
+            if (!selected) {
+                allAnswered = false;
+                break;
+            }
+        }
+
+        if (!allAnswered) {
+            e.preventDefault();
+            alert("Lütfen tüm soruları yanıtlayın.");
+        }
+    });
+</script>

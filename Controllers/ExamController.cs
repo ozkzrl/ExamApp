@@ -19,40 +19,64 @@ namespace ExamApp.Controllers
         public async Task<IActionResult> Index()
         {
             var questions = await _context.Questions.Include(q => q.Options).ToListAsync();
-            return View(questions);
-        }
-
-        [HttpPost]
-        public IActionResult Submit(List<int> userAnswers)
-        {
-            var questions = _context.Questions.Include(q => q.Options).ToList();
-
-            if (userAnswers == null || userAnswers.Count != questions.Count)
+            var model = new ExamViewModel
             {
-                ModelState.AddModelError("", "Lütfen tüm soruları cevaplayınız.");
-                return View("Index", questions);
-            }
-
-            int score = 0;
-
-            for (int i = 0; i < questions.Count; i++)
-            {
-                var correctOption = questions[i].Options.FirstOrDefault(o => o.IsCorrect);
-
-                if (correctOption != null && userAnswers[i] == correctOption.Id)
-                {
-                    score++;
-                }
-            }
-
-            var resultModel = new ExamResultViewModel
-            {
-                Score = score,
-                TotalQuestions = questions.Count
+                Questions = questions,
+                UserAnswers = new List<int?>(new int?[questions.Count]) // Hepsi null başlangıçta
             };
-
-            return View("Result", resultModel);
+            return View(model);
         }
+
+       [HttpPost]
+public IActionResult Submit(ExamViewModel model)
+{
+    var questions = _context.Questions.Include(q => q.Options).ToList();
+    model.Questions = questions;
+
+    // Kullanıcının gönderdiği cevap listesi eksikse tamamla
+    if (model.UserAnswers == null)
+    {
+        model.UserAnswers = new List<int?>(new int?[questions.Count]);
+    }
+
+    // Boş bırakılan soruları kontrol et
+    bool hasEmptyAnswers = false;
+    for (int i = 0; i < questions.Count; i++)
+    {
+        if (model.UserAnswers.Count <= i || model.UserAnswers[i] == null)
+        {
+            hasEmptyAnswers = true; // Boş bir cevap var
+        }
+    }
+
+    // Eğer en az bir soru boş bırakıldıysa hata mesajı göster
+    if (hasEmptyAnswers)
+    {
+        ModelState.AddModelError("", "Lütfen tüm soruları cevaplayınız.");
+        return View("Index", model);
+    }
+
+    // Tüm sorulara cevap verildiyse puanı hesapla
+    int score = 0;
+    for (int i = 0; i < questions.Count; i++)
+    {
+        var correctOption = questions[i].Options.FirstOrDefault(o => o.IsCorrect);
+        // Cevap doğruysa puanı artır
+        if (correctOption != null && model.UserAnswers[i] == correctOption.Id)
+        {
+            score++;
+        }
+    }
+
+    var resultModel = new ExamResultViewModel
+    {
+        Score = score,
+        TotalQuestions = questions.Count
+    };
+
+    return View("Result", resultModel);
+}
 
     }
+
 }
