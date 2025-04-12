@@ -1,43 +1,26 @@
 @model MyMvcExamProject.Models.ExamViewModel
 
-@{
-    ViewData["Title"] = "Sınav Başla";
-}
-
-<h2>@ViewData["Title"]</h2>
-
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger">
-        @Html.ValidationSummary()
-    </div>
-}
+<h2>@Model.Book.Title - Sınav</h2>
 
 <form asp-action="Submit" method="post">
     @for (int i = 0; i < Model.Questions.Count; i++)
     {
-        var question = Model.Questions[i];
-        <div class="question-box">
-            <p><strong>@(i + 1). @question.Text</strong></p>
+        <div class="question">
+            <h4>@Model.Questions[i].Text</h4>
 
-            @foreach (var option in question.Options)
+            @foreach (var option in Model.Questions[i].Options)
             {
                 <div>
-                    <input type="radio"
-                           name="UserAnswers[@i]"
-                           value="@option.Id"
-                           @(Model.UserAnswers != null && Model.UserAnswers.Count > i && Model.UserAnswers[i] == option.Id ? "checked" : "") />
+                    <input type="radio" name="UserAnswers[@i]" value="@option.Id" />
                     <label>@option.Text</label>
                 </div>
             }
         </div>
-        <hr />
     }
 
-    <button type="submit" class="btn btn-primary">Sınavı Bitir</button>
- <a asp-controller="Books" asp-action="Create" class="btn btn-success" style="margin-bottom:15px;">Kitap Ekle</a>
-    
+    <button type="submit">Sınavı Gönder</button>
 </form>
+
 <script>
     document.querySelector("form").addEventListener("submit", function (e) {
         const totalQuestions = @Model.Questions.Count;

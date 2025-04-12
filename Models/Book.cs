@@ -1,4 +1,5 @@
 using MyMvcExamProject.Data; // <-- Bunu mutlaka ekle
+using Microsoft.EntityFrameworkCore;
 
 
 namespace MyMvcExamProject.Models
@@ -8,6 +9,9 @@ namespace MyMvcExamProject.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
-        public int Year { get; set; }
+           public int Year { get; set; }
+        
+        // Kitapla ilişkili soruları içeren navigasyon özelliği
+        public ICollection<Question> Questions { get; set; }
     }
 }

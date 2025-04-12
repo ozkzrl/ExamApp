@@ -1,67 +1,71 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MyMvcExamProject.Models;
-using MyMvcExamProject.Data; // <-- Bunu mutlaka ekle
+using MyMvcExamProject.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace ExamApp.Controllers
+namespace MyMvcExamProject.Controllers
 {
     public class ExamController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        // Constructor'da DbContext'i alıyoruz
         public ExamController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // Ana sayfa, soruları ve seçenekleri veritabanından alıyor
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int bookId)
         {
-            var questions = await _context.Questions.Include(q => q.Options).ToListAsync();
+            var questions = await _context.Questions
+                .Where(q => q.BookId == bookId)
+                .Include(q => q.Options)
+                .ToListAsync();
+
+            var book = await _context.Books.FindAsync(bookId);  // Kitap bilgilerini al
+
             var model = new ExamViewModel
             {
+                Book = book,  // Kitap bilgilerini modelin içine ekle
                 Questions = questions,
-                UserAnswers = new List<int?>(new int?[questions.Count]) // Hepsi null başlangıçta
+                UserAnswers = new List<int?>(new int?[questions.Count]),
             };
+
             return View(model);
         }
 
-       [HttpPost]
+
+        [HttpPost]
 public IActionResult Submit(ExamViewModel model)
 {
-    var questions = _context.Questions.Include(q => q.Options).ToList();
-    model.Questions = questions;
+    var questions = model.Questions;
 
-    // Kullanıcının gönderdiği cevap listesi eksikse tamamla
-    if (model.UserAnswers == null)
+    // Check if UserAnswers is null or not of the same length as Questions
+    if (model.UserAnswers == null || model.UserAnswers.Count != questions.Count)
     {
+        // Initialize UserAnswers if it's null or its count is incorrect
         model.UserAnswers = new List<int?>(new int?[questions.Count]);
     }
 
-    // Boş bırakılan soruları kontrol et
     bool hasEmptyAnswers = false;
     for (int i = 0; i < questions.Count; i++)
     {
         if (model.UserAnswers.Count <= i || model.UserAnswers[i] == null)
         {
-            hasEmptyAnswers = true; // Boş bir cevap var
+            hasEmptyAnswers = true;
         }
     }
 
-    // Eğer en az bir soru boş bırakıldıysa hata mesajı göster
     if (hasEmptyAnswers)
     {
         ModelState.AddModelError("", "Lütfen tüm soruları cevaplayınız.");
         return View("Index", model);
     }
 
-    // Tüm sorulara cevap verildiyse puanı hesapla
+    // Handle score calculation logic
     int score = 0;
     for (int i = 0; i < questions.Count; i++)
     {
         var correctOption = questions[i].Options.FirstOrDefault(o => o.IsCorrect);
-        // Cevap doğruysa puanı artır
         if (correctOption != null && model.UserAnswers[i] == correctOption.Id)
         {
             score++;
@@ -78,5 +82,4 @@ public IActionResult Submit(ExamViewModel model)
 }
 
     }
-
 }

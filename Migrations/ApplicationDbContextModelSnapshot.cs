@@ -109,12 +109,17 @@ namespace MyMvcExamProject.Migrations
             modelBuilder.Entity("MyMvcExamProject.Models.Question", b =>
                 {
                     b.HasOne("MyMvcExamProject.Models.Book", "Book")
-                        .WithMany()
+                        .WithMany("Questions")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("MyMvcExamProject.Models.Book", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("MyMvcExamProject.Models.Question", b =>

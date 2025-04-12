@@ -21,6 +21,15 @@ namespace MyMvcExamProject.Controllers
             return View(await _context.Books.ToListAsync());
         }
 
+
+        public async Task<IActionResult> BooksIndex()
+        {
+            return View(await _context.Books.ToListAsync());
+        }
+
+      
+
+
         public IActionResult Create()
         {
             return View();
