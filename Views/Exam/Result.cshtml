@@ -3,10 +3,19 @@
 @{
     ViewData["Title"] = "Sınav Sonucu";
 }
+@if (Model.Book != null)
+{
+    <h2>@Model.Book.Title - Sınav</h2>
+}
 
-<h2>@ViewData["Title"]</h2>
 
 <p>Doğru Sayısı: @Model.Score</p>
 <p>Toplam Soru Sayısı: @Model.TotalQuestions</p>
 <!-- Ana sayfaya (Index'e) dönüş bağlantısı -->
-<a asp-action="Index" class="btn btn-primary">Yeniden Başla</a>
+
+
+<form asp-action="Index" asp-controller="Exam" method="get">
+    <input type="hidden" name="bookId" value="@Model.BookId" />
+    <button type="submit">Yeniden Başla</button>
+</form>
+

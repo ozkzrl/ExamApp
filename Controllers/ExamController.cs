@@ -32,17 +32,17 @@ namespace MyMvcExamProject.Controllers
 
             return View(model);
         }
-
-
-        [HttpPost]
-public IActionResult Submit(ExamViewModel model)
+       [HttpPost]
+public async Task<IActionResult> Submit(ExamViewModel model)
 {
-    var questions = model.Questions;
+    // Soruları veritabanından tekrar al
+    var questions = await _context.Questions
+        .Where(q => q.BookId == model.BookId)
+        .Include(q => q.Options)
+        .ToListAsync();
 
-    // Check if UserAnswers is null or not of the same length as Questions
     if (model.UserAnswers == null || model.UserAnswers.Count != questions.Count)
     {
-        // Initialize UserAnswers if it's null or its count is incorrect
         model.UserAnswers = new List<int?>(new int?[questions.Count]);
     }
 
@@ -57,11 +57,12 @@ public IActionResult Submit(ExamViewModel model)
 
     if (hasEmptyAnswers)
     {
+        model.Questions = questions; // Geri dönerken tekrar doldur
+        model.Book = await _context.Books.FindAsync(model.BookId); // Kitap bilgisi de lazım
         ModelState.AddModelError("", "Lütfen tüm soruları cevaplayınız.");
         return View("Index", model);
     }
 
-    // Handle score calculation logic
     int score = 0;
     for (int i = 0; i < questions.Count; i++)
     {
@@ -72,10 +73,14 @@ public IActionResult Submit(ExamViewModel model)
         }
     }
 
+    var book = await _context.Books.FindAsync(model.BookId);
+
     var resultModel = new ExamResultViewModel
     {
         Score = score,
-        TotalQuestions = questions.Count
+        TotalQuestions = questions.Count,
+        BookId = model.BookId,
+        Book = book
     };
 
     return View("Result", resultModel);
