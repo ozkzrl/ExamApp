@@ -1,6 +1,6 @@
 @model MyMvcExamProject.Models.ExamViewModel
 
-<h2>@Model.Book.Title sınavı sonucu</h2>
+<h2>@Model.Book.Title Sınavı soruları</h2>
 
 <form asp-action="Submit" method="post">
     <input type="hidden" name="BookId" value="@Model.Book.Id" />
@@ -20,7 +20,12 @@
         </div>
     }
 
-    <button type="submit">Sınavı Gönder</button>
+ <button type="submit"
+  class="text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 hover:brightness-90"
+  style="background-color: #2B3A67;">
+  Sınavı Gönder
+</button>
+
 </form>
 
 <script>

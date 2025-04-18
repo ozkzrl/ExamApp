@@ -16,6 +16,11 @@
 
 <form asp-action="Index" asp-controller="Exam" method="get">
     <input type="hidden" name="bookId" value="@Model.BookId" />
-    <button type="submit">Yeniden Başla</button>
+ <button type="submit"
+  class="text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 hover:brightness-90"
+  style="background-color: #2B3A67;">
+  Yeniden Başla
+</button>
+
 </form>
 

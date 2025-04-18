@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 6\\MyMvcExamProject.csproj": {}
+    "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 7\\MyMvcExamProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 6\\MyMvcExamProject.csproj": {
+    "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 7\\MyMvcExamProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 6\\MyMvcExamProject.csproj",
+        "projectUniqueName": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 7\\MyMvcExamProject.csproj",
         "projectName": "MyMvcExamProject",
-        "projectPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 6\\MyMvcExamProject.csproj",
+        "projectPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 7\\MyMvcExamProject.csproj",
         "packagesPath": "C:\\Users\\binkunduz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 6\\obj\\",
+        "outputPath": "C:\\Users\\binkunduz\\Desktop\\MyMvcExamProject - 7\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\binkunduz\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,6 +38,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.0, )"

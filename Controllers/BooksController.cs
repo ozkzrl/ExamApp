@@ -29,7 +29,7 @@ namespace MyMvcExamProject.Controllers
 
       
 
-
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -46,7 +46,7 @@ namespace MyMvcExamProject.Controllers
             }
             return View(book);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             var book = await _context.Books.FindAsync(id);

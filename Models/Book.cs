@@ -13,5 +13,6 @@ namespace MyMvcExamProject.Models
         
         // Kitapla ilişkili soruları içeren navigasyon özelliği
         public ICollection<Question> Questions { get; set; }
+         public ICollection<ExamResult> ExamResults { get; set; } // Bu satırı ekleyin
     }
 }
