@@ -27,7 +27,7 @@ namespace MyMvcExamProject.Controllers
             return View(await _context.Books.ToListAsync());
         }
 
-      
+
 
         [HttpGet]
         public IActionResult Create()
@@ -36,16 +36,16 @@ namespace MyMvcExamProject.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Book book)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Books.Add(book);
+        
+                _context.Add(book);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(book);
+         
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -57,13 +57,12 @@ namespace MyMvcExamProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Book book)
         {
-            if (ModelState.IsValid)
-            {
+        
                 _context.Books.Update(book);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(book);
+            
+            
         }
 
         // GET: Books/Delete/9

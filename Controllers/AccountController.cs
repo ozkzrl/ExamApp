@@ -22,6 +22,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid)
@@ -31,7 +32,7 @@ public class AccountController : Controller
         if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
         {
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Books");
         }
 
         ModelState.AddModelError("", "Hatalı giriş.");
