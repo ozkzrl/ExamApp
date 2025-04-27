@@ -1,33 +1,50 @@
 @model MyMvcExamProject.Models.ExamViewModel
 
+@{
+    ViewData["Title"] = "Sınav";
+}
 
-<h2>@Model.Book.Title Sınavı soruları</h2>
+<h2>@Model.Book.Title - Sınav</h2>
 
 <form asp-action="Submit" method="post">
     <input type="hidden" name="BookId" value="@Model.Book.Id" />
 
     @for (int i = 0; i < Model.Questions.Count; i++)
     {
-        <div class="question">
-            <h4>@Model.Questions[i].Text</h4>
+        var question = Model.Questions[i];
 
-            @foreach (var option in Model.Questions[i].Options)
+        <div class="question-block">
+            <h4>@(i + 1). @question.Text</h4>
+
+            @foreach (var option in question.Options)
             {
-                <div>
-                    <input type="radio" name="UserAnswers[@i]" value="@option.Id" />
-                    <label>@option.Text</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" 
+                           name="UserAnswers[@i]" 
+                           value="@option.Id" 
+                           id="q@i-option@option.Id"
+                           @(Model.UserAnswers[i] == option.Id ? "checked" : "") />
+                    <label class="form-check-label" for="q@i-option@option.Id">
+                        @option.Text
+                    </label>
                 </div>
             }
         </div>
+
+        <hr />
     }
 
- <button type="submit"
-  class="text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 hover:brightness-90"
-  style="background-color: #2B3A67;">
-  Sınavı Gönder
-</button>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="text-danger">
+            @Html.ValidationSummary()
+        </div>
+    }
 
+    <button type="submit" class="btn btn-primary">Gönder</button>
 </form>
+
+
 
 <script>
     document.querySelector("form").addEventListener("submit", function (e) {

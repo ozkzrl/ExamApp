@@ -21,12 +21,16 @@ namespace MyMvcExamProject.Controllers
 
         public async Task<IActionResult> Index(int bookId)
         {
+            var book = await _context.Books.FindAsync(bookId);
+            if (book == null)
+            {
+                return NotFound("Kitap bulunamadı.");
+            }
+
             var questions = await _context.Questions
                 .Where(q => q.BookId == bookId)
                 .Include(q => q.Options)
                 .ToListAsync();
-
-            var book = await _context.Books.FindAsync(bookId);
 
             var model = new ExamViewModel
             {
@@ -37,6 +41,7 @@ namespace MyMvcExamProject.Controllers
 
             return View(model);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Submit(ExamViewModel model)

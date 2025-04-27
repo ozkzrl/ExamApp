@@ -16,9 +16,26 @@ namespace MyMvcExamProject.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            return View(await _context.Books.ToListAsync());
+            List<Book> books;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                books = await _context.Books
+                    .Where(b => b.Title.Contains(searchTerm))
+                    .OrderByDescending(b => b.Id)
+                    .ToListAsync();
+            }
+            else
+            {
+                books = await _context.Books
+                    .OrderByDescending(b => b.Id)
+                    .Take(10)
+                    .ToListAsync();
+            }
+
+            return View(books);
         }
 
 
@@ -39,11 +56,11 @@ namespace MyMvcExamProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Book book)
         {
-        
-                _context.Add(book);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-         
+
+            _context.Add(book);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
         }
 
         [HttpGet]
@@ -57,12 +74,12 @@ namespace MyMvcExamProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Book book)
         {
-        
-                _context.Books.Update(book);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            
-            
+
+            _context.Books.Update(book);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+
         }
 
         // GET: Books/Delete/9
