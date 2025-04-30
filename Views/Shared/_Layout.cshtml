@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <style>
         body {
@@ -27,89 +25,11 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Gelişmiş Dropdown Stilleri */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+        
 
-        .dropbtn {
-            color: white;
-            padding: 8px 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            background-color: transparent;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown:hover .dropbtn {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            min-width: 220px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-            padding: 10px 0;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 20px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            transition: all 0.2s;
-            font-size: 15px;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f0f7ff;
-            color: #056c00;
-            padding-left: 25px;
-        }
-
-        .dropdown-content a i {
-            margin-right: 12px;
-            color: #002f6c;
-            width: 20px;
-            text-align: center;
-        }
-
-        .dropdown-divider {
-            height: 1px;
-            margin: 8px 0;
-            background-color: #e9ecef;
-        }
-
-        /* Animasyonlu ok işareti */
-        .dropdown-arrow {
-            display: inline-block;
-            margin-left: 8px;
-            transition: transform 0.3s;
-        }
-
-        .dropdown:hover .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-
-
-
+        
+        
+        
         .top-bar {
             display: flex;
             align-items: center;
@@ -149,58 +69,28 @@
             text-decoration: underline;
         }
 
-        /* Dropdown menü stilleri */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown:hover .dropbtn {
-            background-color: #3e8e41;
-        }
-
-        @@media (max-width: 600px) {
-            .top-bar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            nav {
-                justify-content: flex-start;
-            }
-
-            .dropdown-content {
-                position: static;
-            }
-        }
+        
     </style>
 </head>
 
 <body>
+            @using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+        @if (SignInManager.IsSignedIn(User))
+        {
+            var user = await UserManager.GetUserAsync(User);
+            var roles = await UserManager.GetRolesAsync(user);
+
+            if (roles.Contains("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">Yönetici</a>
+                </li>
+            }
+        }
+
     <header>
         <div class="top-bar" style="background-color: #0055A4; padding: 10px; display: flex; align-items: center; justify-content: space-between;">
             <div class="logo" style="display: flex; align-items: center; gap: 10px;">
@@ -226,58 +116,58 @@
                 <a asp-controller="Home" asp-action="Index" class="nav-link text-white">Ana Sayfa</a>
                 <a asp-controller="Home" asp-action="About" class="nav-link text-white">Hakkımızda</a>
 
-                <!-- Kitap İşlemleri Dropdown -->
-                <div class="dropdown" style="position: relative;">
-                    <a href="#" class="nav-link text-white dropbtn">Kitap İşlemleri ▼</a>
-                    <div class="dropdown-content" style="background-color: #0055A4; margin-top: 5px; border: 1px solid rgba(255,255,255,0.2); position: absolute; z-index: 1000; min-width: 200px;">
-                        <a asp-controller="Books" asp-action="Index" style="color: white; display: block; padding: 8px 16px;"><i class="fas fa-list"></i> Kitap Listele</a>
-                        <a asp-controller="Books" asp-action="Create" style="color: white; display: block; padding: 8px 16px;"><i class="fas fa-plus-circle"></i> Kitap Ekle</a>
-                        <div style="border-top: 1px solid rgba(255,255,255,0.2); margin: 5px 0;"></div>
-                        <a asp-controller="Home" asp-action="ExamSelect" style="color: white; display: block; padding: 8px 16px;"><i class="fas fa-search"></i> Kitap Ara</a>
+                
+                
+                    
+                <a asp-controller="Home" asp-action="ExamSelect" style="color: white; display: block; padding: 8px 16px;"><i class="fas fa-search"></i> Kitap Ara</a>
+                
+ 
+
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        <a asp-controller="Home" asp-action="About" class="nav-link text-white">Soru Ekle</a>
+        <a asp-controller="Books" asp-action="Create" style="color: white; display: block; padding: 8px 16px;"><i class="fas fa-plus-circle"></i> Kitap Ekle</a>
+    }                
+                    <a asp-controller="Home" asp-action="About" class="nav-link text-white">Sınav İçin Kitap Seç</a>
+                    <a asp-controller="Home" asp-action="Contact" class="nav-link text-white">İletişim</a>
+                </div>
+
+                <!-- Kullanıcı Email (Sağ Alt) ve Çıkış Butonu -->
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div style="position: absolute; right: 15px; bottom: 5px; display: flex; align-items: center; gap: 10px;">
+                        <span style="color: rgba(255,255,255,0.9); font-size: 0.8rem; font-style: italic;">
+                            @User.Identity.Name
+                        </span>
+                        <form asp-controller="Account" asp-action="Logout" method="post" style="margin: 0;">
+                            <button type="submit" class="btn btn-outline-light btn-sm" style="border-color: white; padding: 0.15rem 0.5rem; font-size: 0.8rem;">
+                                Çıkış Yap
+                            </button>
+                        </form>
                     </div>
-                </div>
+                }
+            </nav>
+        </header>
 
-                <a asp-controller="Home" asp-action="About" class="nav-link text-white">Soru Ekle</a>
-                <a asp-controller="Home" asp-action="About" class="nav-link text-white">Sınav İçin Kitap Seç</a>
-                <a asp-controller="Home" asp-action="Contact" class="nav-link text-white">İletişim</a>
-            </div>
-
-            <!-- Kullanıcı Email (Sağ Alt) ve Çıkış Butonu -->
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div style="position: absolute; right: 15px; bottom: 5px; display: flex; align-items: center; gap: 10px;">
-                    <span style="color: rgba(255,255,255,0.9); font-size: 0.8rem; font-style: italic;">
-                        @User.Identity.Name
-                    </span>
-                    <form asp-controller="Account" asp-action="Logout" method="post" style="margin: 0;">
-                        <button type="submit" class="btn btn-outline-light btn-sm" style="border-color: white; padding: 0.15rem 0.5rem; font-size: 0.8rem;">
-                            Çıkış Yap
-                        </button>
-                    </form>
-                </div>
-            }
-        </nav>
-    </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted" style="background-color: #f8f9fa;">
         <div class="container">
-            &copy; 2025 - KitapTesti - <a asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <partial name="_ValidationScriptsPartial" />
+        <footer class="border-top footer text-muted" style="background-color: #f8f9fa;">
+            <div class="container">
+                &copy; 2025 - KitapTesti - <a asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+            </div>
+        </footer>
 
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <partial name="_ValidationScriptsPartial" />
+
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>

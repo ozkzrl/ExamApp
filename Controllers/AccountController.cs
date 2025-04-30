@@ -21,23 +21,31 @@ public class AccountController : Controller
         return View();
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(LoginViewModel model)
-    {
-        if (!ModelState.IsValid)
-            return View(model);
+   [HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Login(LoginViewModel model)
+{
+    if (!ModelState.IsValid)
+        return View(model);
 
-        var user = await _userManager.FindByEmailAsync(model.Email);
-        if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+    var user = await _userManager.FindByEmailAsync(model.Email);
+    if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+    {
+        await _signInManager.SignInAsync(user, isPersistent: false);
+
+        // Admin rolündeyse Admin paneline yönlendir
+        if (await _userManager.IsInRoleAsync(user, "Admin"))
         {
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            return RedirectToAction("Index", "Books");
+            return RedirectToAction("Index", "Admin");
         }
 
-        ModelState.AddModelError("", "Hatalı giriş.");
-        return View(model);
+        // Normal kullanıcı ise Books sayfasına yönlendir
+        return RedirectToAction("Index", "Books");
     }
+
+    ModelState.AddModelError("", "Hatalı giriş.");
+    return View(model);
+}
 
     [HttpPost]
     public async Task<IActionResult> Logout()

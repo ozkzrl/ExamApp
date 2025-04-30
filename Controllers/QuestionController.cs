@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyMvcExamProject.Data;
 using MyMvcExamProject.Models;
+using Microsoft.AspNetCore.Authorization;
 
 public class QuestionController : Controller
 {
@@ -12,6 +13,8 @@ public class QuestionController : Controller
     }
 
     // Kitaba ait soruları listele
+
+    [Authorize(Roles = "Admin")]
     public IActionResult Index(int bookId)
     {
         var book = _context.Books.Find(bookId);
@@ -26,12 +29,14 @@ public class QuestionController : Controller
     }
 
     // Yeni soru ekle formu
+    [Authorize(Roles = "Admin")]
     public IActionResult Create(int bookId)
     {
         ViewBag.BookId = bookId;
         return View();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult Create(Question question, List<string> options, int correctOptionIndex)
     {

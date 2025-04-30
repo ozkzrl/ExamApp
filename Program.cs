@@ -1,19 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using MyMvcExamProject.Models;  // Models ad alanını dahil et
-using MyMvcExamProject.Data;
 using Microsoft.AspNetCore.Identity;
-
-
+using Microsoft.Extensions.DependencyInjection;
+using MyMvcExamProject.Data;
+using MyMvcExamProject.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Veritabanı bağlantısını ekleyin
+// Veritabanı bağlantısı
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// MVC'yi ekleyin
-builder.Services.AddControllersWithViews();
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => 
+// Identity yapılandırması
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequiredLength = 8;
@@ -21,27 +19,42 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
 })
+.AddRoles<IdentityRole>()  // Rolleri ekliyoruz
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
+
+// MVC
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
 
-// Uygulama pipeline'ı
+// Roller ve admin oluşturma işlemini çağır
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    
+    await SeedData.CreateRoles(roleManager, userManager);
+}
+
+// Pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
-// Mutlaka UseRouting'den sonra, UseEndpoints'ten önce olmalı
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
