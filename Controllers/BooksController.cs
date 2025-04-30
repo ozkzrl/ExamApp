@@ -46,6 +46,12 @@ namespace MyMvcExamProject.Controllers
             return View(await _context.Books.ToListAsync());
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminBooksIndex()
+        {
+            return View(await _context.Books.ToListAsync());
+        }
+
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -62,7 +68,7 @@ namespace MyMvcExamProject.Controllers
 
             _context.Add(book);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminBooksIndex");
 
         }
 
@@ -82,7 +88,7 @@ namespace MyMvcExamProject.Controllers
 
             _context.Books.Update(book);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminBooksIndex");
 
 
         }
@@ -110,7 +116,7 @@ namespace MyMvcExamProject.Controllers
                 _context.Books.Remove(book);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("AdminBooksIndex");
         }
     }
 }

@@ -1,20 +1,37 @@
-@model IEnumerable<MyMvcExamProject.Models.Book>
+@model List<MyMvcExamProject.Models.Book>
 
 <h2>Kitap Listesi</h2>
+
+<!-- Arama Formu -->
+<form asp-controller="Books" asp-action="Index" method="get" style="margin-bottom:15px;">
+    <div class="input-group">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Kitap adına göre ara..." />
+        <button type="submit" class="btn btn-info">Ara</button>
+    </div>
+</form>
+
 <table class="table">
-    <tr>
-        <th>Başlık</th>
-        <th>Yazar</th>
-        <th>Sınav için Kitap Seç</th>
-    </tr>
-    @foreach (var book in Model)
-    {
+    <thead>
         <tr>
-            <td>@book.Title</td>
-            <td>@book.Author</td>
-            <td><a href="@Url.Action("Index", "Exam", new {bookId = book.Id })">@book.Title</a></td>
+            <th>Başlık</th>
+            <th>Yazar</th>
+            <th>Yıl</th>
+            <th>İşlemler</th>
         </tr>
-    }
-
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Year</td>
+                <td>
+                    <a asp-controller="Exam" asp-action="Index" asp-route-bookId="@book.Id" class="btn btn-warning" style="margin-left:5px;">
+                        Sınava Gir
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
-

@@ -78,21 +78,10 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-        @if (SignInManager.IsSignedIn(User))
-        {
-            var user = await UserManager.GetUserAsync(User);
-            var roles = await UserManager.GetRolesAsync(user);
-
-            if (roles.Contains("Admin"))
-            {
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">Yönetici</a>
-                </li>
-            }
-        }
+      
 
     <header>
-        <div class="top-bar" style="background-color: #0055A4; padding: 10px; display: flex; align-items: center; justify-content: space-between;">
+        <div class="top-bar" style="background-color: #002f6c; padding: 10px; display: flex; align-items: center; justify-content: space-between;">
             <div class="logo" style="display: flex; align-items: center; gap: 10px;">
                 <img src="~/Logo/Logo.webp" alt="KitapTesti Logo" style="height: 40px;">
                 <span class="site-name" style="color: white; font-size: 1.5rem; font-weight: bold;">KitapTesti</span>
@@ -104,32 +93,32 @@
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-sm" style="border-color: white;">Giriş</a>
-                    <a asp-controller="Admin" asp-action="Login" class="btn btn-outline-light btn-sm" style="border-color: white;">Yönetici</a>
                 }
             </div>
         </div>
 
         <!-- Navbar -->
-        <nav style="display: flex; justify-content: center; padding: 10px; background-color: #0055A4; color: white; height: 50px; position: relative;">
+        <nav style="display: flex; justify-content: center; padding: 10px; background-color: #002f6c; color: white; height: 50px; position: relative;">
             <!-- Ortalanmış Menü -->
-            <div style="display: flex; gap: 15px; align-items: center;">
-                <a asp-controller="Home" asp-action="Index" class="nav-link text-white">Ana Sayfa</a>
-                <a asp-controller="Home" asp-action="About" class="nav-link text-white">Hakkımızda</a>
-
-                
-                
-                    
-                <a asp-controller="Home" asp-action="ExamSelect" style="color: white; display: block; padding: 8px 16px;"><i class="fas fa-search"></i> Kitap Ara</a>
-                
- 
-
-    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-    {
-        <a asp-controller="Home" asp-action="About" class="nav-link text-white">Soru Ekle</a>
-        <a asp-controller="Books" asp-action="Create" style="color: white; display: block; padding: 8px 16px;"><i class="fas fa-plus-circle"></i> Kitap Ekle</a>
-    }                
-                    <a asp-controller="Home" asp-action="About" class="nav-link text-white">Sınav İçin Kitap Seç</a>
-                    <a asp-controller="Home" asp-action="Contact" class="nav-link text-white">İletişim</a>
+              <div style="display: flex; gap: 15px; align-items: center;">
+        <a asp-controller="Home" asp-action="Index" class="nav-link text-white">Ana Sayfa</a>
+        <a asp-controller="Home" asp-action="About" class="nav-link text-white">Hakkımızda</a>               
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            <a asp-controller="Books" asp-action="AdminBooksIndex" class="nav-link text-white">Soru Ekle</a>
+            <a asp-controller="Books" asp-action="Create" style="color: white; display: block; padding: 8px 16px;">
+                <i class="fas fa-plus-circle"></i> Kitap Ekle
+            </a>
+        }
+        
+        else if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+        {
+            <a asp-controller="Books" asp-action="BooksIndex" class="nav-link text-white">Sınav İçin Kitap Seç</a>
+        }
+        
+        
+        
+        <a asp-controller="Home" asp-action="Contact" class="nav-link text-white">İletişim</a>
                 </div>
 
                 <!-- Kullanıcı Email (Sağ Alt) ve Çıkış Butonu -->

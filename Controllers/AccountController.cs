@@ -40,7 +40,7 @@ public async Task<IActionResult> Login(LoginViewModel model)
         }
 
         // Normal kullanıcı ise Books sayfasına yönlendir
-        return RedirectToAction("Index", "Books");
+        return RedirectToAction("Index", "Home");
     }
 
     ModelState.AddModelError("", "Hatalı giriş.");
